@@ -1,8 +1,10 @@
-import SignIn from './pages/SignIn';
-import './App.css';
+import { BrowserRouter } from 'react-router-dom';
+import RoutesComponent from './routes';
 
-function App() {
-  return <SignIn />;
+export default function App() {
+  return (
+    <BrowserRouter>
+      <RoutesComponent />
+    </BrowserRouter>
+  )
 }
-
-export default App;
