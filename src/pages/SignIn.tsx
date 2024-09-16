@@ -1,11 +1,12 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { FC } from 'react';
 
 interface LoginForm {
   email: string;
   password: string;
 }
 
-export default function App() {
+const SignIn: FC = () => {
   const {
     register,
     handleSubmit,
@@ -50,4 +51,6 @@ export default function App() {
       <button type="submit">ログイン</button>
     </form>
   );
-}
+};
+
+export default SignIn;
