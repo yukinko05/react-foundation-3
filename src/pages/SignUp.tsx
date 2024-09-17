@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { FC } from 'react';
-
+import axios from 'axios';
 interface SignUpForm {
   name: string;
   email: string;
@@ -14,8 +14,13 @@ const SignUp: FC = () => {
     formState: { errors },
   } = useForm<SignUpForm>({ mode: 'onBlur' });
 
-  const onSubmit: SubmitHandler<SignUpForm> = (data: SignUpForm) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<SignUpForm> = async (data) => {
+    try {
+      const response = await axios.post("https://railway.bookreview.techtrain.dev/users", data);
+      console.log(response.data); //レスポンスはトークンが返ってくる
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
