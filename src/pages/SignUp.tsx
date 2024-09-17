@@ -2,6 +2,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { FC } from 'react';
 
 interface SignUpForm {
+  name: string;
   email: string;
   password: string;
 }
@@ -21,6 +22,14 @@ const SignUp: FC = () => {
     <>
       <h1>新規登録</h1>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
+        <div>
+          <label htmlFor="name">名前</label>
+          <input {...register("name", {
+            required: '名前は必須です',
+          })} type="text" id="name" name="name" />
+          {errors.name && <p>{errors.name.message}</p>}
+        </div>
+
         <div>
           <label htmlFor="email">メールアドレス</label>
           <input {...register("email", {
