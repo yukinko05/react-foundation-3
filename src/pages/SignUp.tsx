@@ -1,4 +1,5 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useState } from 'react';
 import { FC } from 'react';
 import axios from 'axios';
 interface SignUpForm {
@@ -8,6 +9,8 @@ interface SignUpForm {
 }
 
 const SignUp: FC = () => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -19,13 +22,14 @@ const SignUp: FC = () => {
       const response = await axios.post("https://railway.bookreview.techtrain.dev/users", data);
       console.log(response.data); //レスポンスはトークンが返ってくる
     } catch (error) {
-      console.error(error);
+      setErrorMessage(`サインインに失敗しました。${error}`);
     }
   };
 
   return (
     <>
       <h1>新規登録</h1>
+      <p>{errorMessage}</p>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <div>
           <label htmlFor="name">名前</label>
