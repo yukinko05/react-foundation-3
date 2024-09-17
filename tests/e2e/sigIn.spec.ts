@@ -1,7 +1,9 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('ログイン画面のメールアドレス入力検証', () => {
-  test('未入力で送信ボタンを押した際にエラーメッセージが表示される', async ({ page }) => {
+  test('入力フィールドをクリックして未入力のままフォーカスを外した際にエラーメッセージが表示される', async ({
+    page,
+  }) => {
     await page.goto('http://localhost:4000/login');
     await page.fill('input[name="email"]', '');
     await page.locator('input[name="email"]').blur();
@@ -28,7 +30,9 @@ test.describe('ログイン画面のメールアドレス入力検証', () => {
 });
 
 test.describe('ログイン画面のパスワード入力検証', () => {
-  test('未入力で送信ボタンを押した際にエラーメッセージが表示される', async ({ page }) => {
+  test('入力フィールドをクリックして未入力のままフォーカスを外した際にエラーメッセージが表示される', async ({
+    page,
+  }) => {
     await page.goto('http://localhost:4000/login');
     await page.fill('input[name="password"]', '');
     await page.locator('input[name="password"]').blur();
