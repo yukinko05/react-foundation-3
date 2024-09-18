@@ -2,7 +2,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { FC } from 'react';
 import axios from 'axios';
 import { useState } from 'react';
-
+import { useCookies } from 'react-cookie';
 interface LoginForm {
   email: string;
   password: string;
@@ -10,6 +10,7 @@ interface LoginForm {
 
 const SignIn: FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [cookies, setCookies] = useCookies();
 
   const {
     register,
@@ -19,8 +20,10 @@ const SignIn: FC = () => {
 
   const onSubmit: SubmitHandler<LoginForm> = async (data) => {
     try {
-      await axios.post('https://railway.bookreview.techtrain.dev/signin', data);
-      console.log(data);
+      const response = await axios.post('https://railway.bookreview.techtrain.dev/signin', data);
+      const token = response.data.token;
+      setCookies('token', token);
+
     } catch (error) {
       setErrorMessage(`ログインに失敗しました。${error}`);
     }
