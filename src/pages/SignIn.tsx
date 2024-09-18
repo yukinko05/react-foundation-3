@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { FC } from 'react';
-
+import axios from 'axios';
 interface LoginForm {
   email: string;
   password: string;
@@ -13,8 +13,13 @@ const SignIn: FC = () => {
     formState: { errors },
   } = useForm<LoginForm>({ mode: 'onBlur' });
 
-  const onSubmit: SubmitHandler<LoginForm> = (data: LoginForm) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<LoginForm> = async (data) => {
+    try {
+      await axios.post('https://railway.bookreview.techtrain.dev/signin', data);
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
