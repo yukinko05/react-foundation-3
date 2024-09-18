@@ -27,7 +27,6 @@ const SignIn: FC = () => {
       const token = response.data.token;
       setCookies('token', token);
       navigate('/');
-
     } catch (error) {
       setErrorMessage(`ログインに失敗しました。${error}`);
     }
