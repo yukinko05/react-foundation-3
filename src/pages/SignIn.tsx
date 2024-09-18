@@ -20,7 +20,7 @@ const SignIn: FC = () => {
   return (
     <>
       <h1>ログイン</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <div>
           <label htmlFor="email">メールアドレス</label>
           <input
