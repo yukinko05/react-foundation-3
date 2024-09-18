@@ -1,12 +1,16 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { FC } from 'react';
 import axios from 'axios';
+import { useState } from 'react';
+
 interface LoginForm {
   email: string;
   password: string;
 }
 
 const SignIn: FC = () => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -18,13 +22,14 @@ const SignIn: FC = () => {
       await axios.post('https://railway.bookreview.techtrain.dev/signin', data);
       console.log(data);
     } catch (error) {
-      console.error(error);
+      setErrorMessage(`ログインに失敗しました。${error}`);
     }
   };
 
   return (
     <>
       <h1>ログイン</h1>
+      <p>{errorMessage}</p>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <div>
           <label htmlFor="email">メールアドレス</label>
