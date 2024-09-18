@@ -3,6 +3,8 @@ import { FC } from 'react';
 import axios from 'axios';
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
+
 interface LoginForm {
   email: string;
   password: string;
@@ -11,6 +13,7 @@ interface LoginForm {
 const SignIn: FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [cookies, setCookies] = useCookies();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -23,6 +26,7 @@ const SignIn: FC = () => {
       const response = await axios.post('https://railway.bookreview.techtrain.dev/signin', data);
       const token = response.data.token;
       setCookies('token', token);
+      navigate('/');
 
     } catch (error) {
       setErrorMessage(`ログインに失敗しました。${error}`);
