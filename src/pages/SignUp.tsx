@@ -84,6 +84,11 @@ const SignUp: FC = () => {
           {errors.password && <p>{errors.password.message}</p>}
         </div>
 
+        <div>
+          <label htmlFor="iconImg">プロフィール写真</label>
+          <input type="file" id="iconImg" name="iconImg" accept=".jpg, .jpeg, .png" />
+        </div>
+
         <button>作成</button>
       </form>
     </>
