@@ -4,6 +4,7 @@ import { FC } from 'react';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
+import Compressor from 'compressorjs';
 interface SignUpForm {
   name: string;
   email: string;
@@ -13,6 +14,7 @@ interface SignUpForm {
 const SignUp: FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [cookies, setCookies] = useCookies();
+  const [iconImg, setIconImg] = useState<Blob | File | null>(null);
   const navigate = useNavigate();
 
   const {
@@ -20,6 +22,35 @@ const SignUp: FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<SignUpForm>({ mode: 'onBlur' });
+
+  const imageCompression = (e) => {
+    const file = e.target.files[0];
+
+    if (!file) {
+      return;
+    } else if (file.size > 5 * 1024 * 1024) {
+      new Compressor(file, {
+        quality: 0.4,
+        success(compressedResult) {
+          setIconImg(compressedResult);
+        },
+      });
+    } else if (file.size < 2 * 1024 * 1024) {
+      new Compressor(file, {
+        quality: 0.6,
+        success(compressedResult) {
+          setIconImg(compressedResult);
+        },
+      });
+    } else {
+      new Compressor(file, {
+        quality: 0.6,
+        success(compressedResult) {
+          setIconImg(compressedResult);
+        },
+      });
+    }
+  };
 
   const onSubmit: SubmitHandler<SignUpForm> = async (data) => {
     try {
@@ -82,6 +113,17 @@ const SignUp: FC = () => {
             name="password"
           />
           {errors.password && <p>{errors.password.message}</p>}
+        </div>
+
+        <div>
+          <label htmlFor="iconImg">プロフィール写真</label>
+          <input
+            type="file"
+            id="iconImg"
+            name="iconImg"
+            accept=".jpg, .jpeg, .png"
+            onChange={imageCompression}
+          />
         </div>
 
         <button>作成</button>
