@@ -23,8 +23,8 @@ const SignUp: FC = () => {
     formState: { errors },
   } = useForm<SignUpForm>({ mode: 'onBlur' });
 
-  const imageCompression = (e) => {
-    const file = e.target.files[0];
+  const imageCompression = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
 
     if (!file) return;
 
@@ -50,11 +50,25 @@ const SignUp: FC = () => {
   };
 
   const onSubmit: SubmitHandler<SignUpForm> = async (data) => {
+
     try {
       const response = await axios.post('https://railway.bookreview.techtrain.dev/users', data);
       const token = response.data.token;
       setCookies('token', token);
+
+      if (iconImg) {
+        const formData = new FormData();
+        formData.append('icon', iconImg);
+
+        await axios.post('https://railway.bookreview.techtrain.dev/uploads', formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+      };
+
       navigate('/');
+
     } catch (error) {
       setErrorMessage(`サインインに失敗しました。${error}`);
     }
