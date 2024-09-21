@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { FC } from 'react';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Compressor from 'compressorjs';
 interface SignUpForm {
   name: string;
@@ -125,6 +125,7 @@ const SignUp: FC = () => {
 
         <button>作成</button>
       </form>
+      <Link to="/login">ログインはこちら</Link>
     </>
   );
 };
