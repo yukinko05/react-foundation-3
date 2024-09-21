@@ -26,30 +26,27 @@ const SignUp: FC = () => {
   const imageCompression = (e) => {
     const file = e.target.files[0];
 
-    if (!file) {
-      return;
-    } else if (file.size > 5 * 1024 * 1024) {
-      new Compressor(file, {
-        quality: 0.4,
-        success(compressedResult) {
-          setIconImg(compressedResult);
-        },
-      });
+    if (!file) return;
+
+    let quality;
+
+    if (file.size > 5 * 1024 * 1024) {
+      quality = 0.4;
     } else if (file.size < 2 * 1024 * 1024) {
-      new Compressor(file, {
-        quality: 0.6,
-        success(compressedResult) {
-          setIconImg(compressedResult);
-        },
-      });
+      quality = 0.6;
     } else {
-      new Compressor(file, {
-        quality: 0.6,
-        success(compressedResult) {
-          setIconImg(compressedResult);
-        },
-      });
+      quality = 0.8;
     }
+
+    new Compressor(file, {
+      quality,
+      success: (compressedFile) => {
+        setIconImg(compressedFile);
+      },
+      error: (error) => {
+        console.error(error.message);
+      },
+    });
   };
 
   const onSubmit: SubmitHandler<SignUpForm> = async (data) => {
