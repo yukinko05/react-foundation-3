@@ -1,7 +1,7 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useState } from 'react';
 import { FC } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useCookies } from 'react-cookie';
 import { useNavigate, Link } from 'react-router-dom';
 import Compressor from 'compressorjs';
@@ -50,7 +50,6 @@ const SignUp: FC = () => {
   };
 
   const onSubmit: SubmitHandler<SignUpForm> = async (data) => {
-
     try {
       const response = await axios.post('https://railway.bookreview.techtrain.dev/users', data);
       const token = response.data.token;
@@ -64,13 +63,14 @@ const SignUp: FC = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        })
-      };
+        });
+      }
 
       navigate('/');
-
     } catch (error) {
-      setErrorMessage(`サインインに失敗しました。${error}`);
+      if (error instanceof AxiosError && error.response && error.response.data) {
+        setErrorMessage(error.response.data.ErrorMessageJP);
+      }
     }
   };
 
