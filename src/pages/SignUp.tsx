@@ -75,72 +75,108 @@ const SignUp: FC = () => {
   };
 
   return (
-    <>
-      <h1>新規登録</h1>
-      <p>{errorMessage}</p>
-      <form onSubmit={handleSubmit(onSubmit)} noValidate>
-        <div>
-          <label htmlFor="name">名前</label>
-          <input
-            {...register('name', {
-              required: '名前は必須です',
-            })}
-            type="text"
-            id="name"
-            name="name"
-          />
-          {errors.name && <p>{errors.name.message}</p>}
-        </div>
+    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      <main className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <h1 className="mt-10 text-center text-3xl font-bold leading-9 tracking-tight text-gray-900">
+          新規登録
+        </h1>
+        <p className="text-red-600">{errorMessage}</p>
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-6">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
+                名前
+              </label>
+              <div className="mt-1">
+                <input
+                  {...register('name', {
+                    required: '名前は必須です',
+                  })}
+                  type="text"
+                  id="name"
+                  name="name"
+                  className="block w-full rounded-md p-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 text-sm sm:text-sm sm:leading-6"
+                />
+              </div>
+              {errors.name && <p className="pt-1.5 text-red-600">{errors.name.message}</p>}
+            </div>
 
-        <div>
-          <label htmlFor="email">メールアドレス</label>
-          <input
-            {...register('email', {
-              required: 'メールアドレスは必須です',
-              pattern: {
-                value: /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]+.[A-Za-z0-9]+$/,
-                message: '正しいメールアドレスを入力してください',
-              },
-            })}
-            type="email"
-            id="email"
-            name="email"
-          />
-          {errors.email && <p>{errors.email.message}</p>}
-        </div>
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                メールアドレス
+              </label>
+              <div className="mt-1">
+                <input
+                  {...register('email', {
+                    required: 'メールアドレスは必須です',
+                    pattern: {
+                      value: /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]+.[A-Za-z0-9]+$/,
+                      message: '正しいメールアドレスを入力してください',
+                    },
+                  })}
+                  type="email"
+                  id="email"
+                  name="email"
+                  className="block w-full rounded-md p-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 text-sm sm:text-sm sm:leading-6"
+                />
+              </div>
+              {errors.email && <p className="pt-1.5 text-red-600">{errors.email.message}</p>}
+            </div>
 
-        <div>
-          <label htmlFor="password">パスワード</label>
-          <input
-            {...register('password', {
-              required: 'パスワードは必須です',
-              minLength: {
-                value: 8,
-                message: 'パスワードは8文字以上で入力してください',
-              },
-            })}
-            type="password"
-            id="password"
-            name="password"
-          />
-          {errors.password && <p>{errors.password.message}</p>}
-        </div>
+            <div>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                パスワード
+              </label>
+              <div className="mt-1">
+                <input
+                  {...register('password', {
+                    required: 'パスワードは必須です',
+                    minLength: {
+                      value: 8,
+                      message: 'パスワードは8文字以上で入力してください',
+                    },
+                  })}
+                  type="password"
+                  id="password"
+                  name="password"
+                  className="block w-full rounded-md p-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 text-sm sm:text-sm sm:leading-6"
+                />
+              </div>
+              {errors.password && <p className="pt-1.5 text-red-600">{errors.password.message}</p>}
+            </div>
 
-        <div>
-          <label htmlFor="iconImg">プロフィール写真</label>
-          <input
-            type="file"
-            id="iconImg"
-            name="iconImg"
-            accept=".jpg, .jpeg, .png"
-            onChange={imageCompression}
-          />
+            {/*TODO:選択した画像のプレビューを表示 */}
+            <div>
+              <label htmlFor="iconImg" className="border rounded-md p-1.5 text-sm cursor-pointer">
+                プロフィール写真をアップロード
+              </label>
+              <div className="mt-1">
+                <input
+                  type="file"
+                  id="iconImg"
+                  name="iconImg"
+                  accept=".jpg, .jpeg, .png"
+                  onChange={imageCompression}
+                  className="hidden"
+                />
+              </div>
+              <p className="text-xs mt-1.5">プロフィール写真の登録は任意です</p>
+            </div>
+            <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-1 px-4 rounded-md">
+              作成
+            </button>
+          </form>
         </div>
-
-        <button>作成</button>
-      </form>
-      <Link to="/login">ログインはこちら</Link>
-    </>
+        <div className=" mt-2.5 text-right">
+          <Link to="/login" className="text-blue-600 hover:text-blue-400">
+            ログインはこちら
+          </Link>
+        </div>
+      </main>
+    </div>
   );
 };
 
