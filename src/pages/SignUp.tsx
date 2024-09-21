@@ -1,9 +1,9 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useState } from 'react';
 import { FC } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useCookies } from 'react-cookie';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Compressor from 'compressorjs';
 interface SignUpForm {
   name: string;
@@ -23,33 +23,30 @@ const SignUp: FC = () => {
     formState: { errors },
   } = useForm<SignUpForm>({ mode: 'onBlur' });
 
-  const imageCompression = (e) => {
-    const file = e.target.files[0];
+  const imageCompression = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
 
-    if (!file) {
-      return;
-    } else if (file.size > 5 * 1024 * 1024) {
-      new Compressor(file, {
-        quality: 0.4,
-        success(compressedResult) {
-          setIconImg(compressedResult);
-        },
-      });
+    if (!file) return;
+
+    let quality;
+
+    if (file.size > 5 * 1024 * 1024) {
+      quality = 0.4;
     } else if (file.size < 2 * 1024 * 1024) {
-      new Compressor(file, {
-        quality: 0.6,
-        success(compressedResult) {
-          setIconImg(compressedResult);
-        },
-      });
+      quality = 0.6;
     } else {
-      new Compressor(file, {
-        quality: 0.6,
-        success(compressedResult) {
-          setIconImg(compressedResult);
-        },
-      });
+      quality = 0.8;
     }
+
+    new Compressor(file, {
+      quality,
+      success: (compressedFile) => {
+        setIconImg(compressedFile);
+      },
+      error: (error) => {
+        console.error(error.message);
+      },
+    });
   };
 
   const onSubmit: SubmitHandler<SignUpForm> = async (data) => {
@@ -57,9 +54,23 @@ const SignUp: FC = () => {
       const response = await axios.post('https://railway.bookreview.techtrain.dev/users', data);
       const token = response.data.token;
       setCookies('token', token);
+
+      if (iconImg) {
+        const formData = new FormData();
+        formData.append('icon', iconImg);
+
+        await axios.post('https://railway.bookreview.techtrain.dev/uploads', formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      }
+
       navigate('/');
     } catch (error) {
-      setErrorMessage(`サインインに失敗しました。${error}`);
+      if (error instanceof AxiosError && error.response && error.response.data) {
+        setErrorMessage(error.response.data.ErrorMessageJP);
+      }
     }
   };
 
@@ -128,6 +139,7 @@ const SignUp: FC = () => {
 
         <button>作成</button>
       </form>
+      <Link to="/login">ログインはこちら</Link>
     </>
   );
 };

@@ -3,7 +3,7 @@ import { FC } from 'react';
 import axios from 'axios';
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 interface LoginForm {
   email: string;
@@ -73,6 +73,7 @@ const SignIn: FC = () => {
 
         <button type="submit">ログイン</button>
       </form>
+      <Link to="/signup">新規登録はこちら</Link>
     </>
   );
 };
