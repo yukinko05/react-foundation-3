@@ -1,8 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-interface OffsetState {
-  offset: number;
-}
+import { OffsetState } from './types';
 
 const initialState: OffsetState = {
   offset: 0,
