@@ -12,7 +12,7 @@ interface LoginForm {
 
 const SignIn: FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [cookies, setCookies] = useCookies();
+  const [_cookies, setCookies] = useCookies();
   const navigate = useNavigate();
 
   const {

@@ -13,7 +13,7 @@ interface SignUpForm {
 
 const SignUp: FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [cookies, setCookies] = useCookies();
+  const [_cookies, setCookies] = useCookies();
   const [iconImg, setIconImg] = useState<Blob | File | null>(null);
   const navigate = useNavigate();
 
