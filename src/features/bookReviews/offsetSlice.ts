@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { OffsetState } from './types';
+import { OffsetState } from '../../types';
 
 const initialState: OffsetState = {
   offset: 0,

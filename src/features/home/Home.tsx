@@ -1,5 +1,5 @@
-import BookReviewList from '../components/BookReviewList';
-import { nextPage, previousPage } from '../offsetSlice';
+import BookReviewList from '../bookReviews/BookReviewList';
+import { nextPage, previousPage } from '../bookReviews/offsetSlice';
 import { useDispatch } from 'react-redux';
 const Home = () => {
   const dispatch = useDispatch();
