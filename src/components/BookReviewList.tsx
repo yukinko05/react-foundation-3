@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { RootState } from './store';
-import { Book } from './types';
+import { RootState } from '../store';
+import { Book } from '../types';
 import ReviewCard from './ReviewCard';
 
 const BookReviewList = () => {
