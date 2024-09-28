@@ -13,7 +13,6 @@ const Home = () => {
           onClick={() => dispatch(previousPage())}
           className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-4 rounded-md"
         >
-          {' '}
           前へ
         </button>
         <button
