@@ -15,13 +15,18 @@ const BookReviewList = () => {
 
   useEffect(() => {
     const fetchBooks = async () => {
+      if (!token) {
+        setErrorMessage('新規登録またはログインすると書籍レビューが見れるようになります');
+        return;
+      }
       try {
         const response = await axios.get(
-          `https://railway.bookreview.techtrain.dev/books?offset=${offset}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
+          `https://railway.bookreview.techtrain.dev/books?offset=${offset}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
-        }
         );
         setBookReviews(response.data);
       } catch (error) {
@@ -33,7 +38,7 @@ const BookReviewList = () => {
 
   return (
     <div>
-      {errorMessage && <p className="text-red-600">{errorMessage}</p>}
+      {errorMessage && <p className="text-red-600 text-center mt-10">{errorMessage}</p>}
       <ul className="grid grid-cols-1 gap-4 mt-2 sm:grid-cols-2">
         {bookReviews.map((book: Book) => (
           <ReviewCard key={book.id} book={book} />
