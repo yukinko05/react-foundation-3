@@ -1,37 +1,51 @@
-# .github/workflows/deploy.yml
-name: Deploy App to GitHub Pages
+# 静的コンテンツを GitHub Pages にデプロイするためのシンプルなワークフロー
+name: Deploy static content to Pages
 
 on:
+  # デフォルトブランチを対象としたプッシュ時にで実行されます
   push:
-    branches:
-      - main # mainブランチにプッシュされたときに実行
+    branches: ['main']
+
+  # Actions タブから手動でワークフローを実行できるようにします
+  workflow_dispatch:
+
+# GITHUB_TOKEN のパーミッションを設定し、GitHub Pages へのデプロイを許可します
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 1 つの同時デプロイメントを可能にする
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
 
 jobs:
-  build-deploy:
+  # デプロイするだけなので、単一のデプロイジョブ
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-
     steps:
-      # リポジトリのコードをチェックアウト
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      # Node.js をセットアップ
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
-
-      # 依存関係をインストール
+          node-version: 20
+          cache: 'npm'
       - name: Install dependencies
-        run: npm install
-
-      # Vite プロジェクトをビルド
-      - name: Build project
+        run: npm ci
+      - name: Build
         run: npm run build
-
-      # gh-pages ブランチにビルドされたファイルをデプロイ
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          # dist フォルダーのアップロード
+          path: './dist'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
