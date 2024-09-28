@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import offsetReducer from './offsetSlice';
+import offsetReducer from '../features/bookReviews/offsetSlice';
 
 export const store = configureStore({
   reducer: {

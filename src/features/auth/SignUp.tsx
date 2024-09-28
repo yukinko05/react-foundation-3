@@ -13,7 +13,7 @@ interface SignUpForm {
 
 const SignUp: FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [cookies, setCookies] = useCookies();
+  const [_cookies, setCookies] = useCookies();
   const [iconImg, setIconImg] = useState<Blob | File | null>(null);
   const navigate = useNavigate();
 
@@ -86,7 +86,7 @@ const SignUp: FC = () => {
             <div>
               <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
                 名前
-                <span className='text-red-600'>*</span>
+                <span className="text-red-600">*</span>
               </label>
               <div className="mt-1">
                 <input
@@ -105,7 +105,7 @@ const SignUp: FC = () => {
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                 メールアドレス
-                <span className='text-red-600'>*</span>
+                <span className="text-red-600">*</span>
               </label>
               <div className="mt-1">
                 <input
@@ -131,7 +131,7 @@ const SignUp: FC = () => {
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 パスワード
-                <span className='text-red-600'>*</span>
+                <span className="text-red-600">*</span>
               </label>
               <div className="mt-1">
                 <input

@@ -12,7 +12,7 @@ interface LoginForm {
 
 const SignIn: FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [cookies, setCookies] = useCookies();
+  const [_cookies, setCookies] = useCookies();
   const navigate = useNavigate();
 
   const {
@@ -44,7 +44,7 @@ const SignIn: FC = () => {
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                 メールアドレス
-                <span className='text-red-600'>*</span>
+                <span className="text-red-600">*</span>
               </label>
               <div className="mt-1">
                 <input
@@ -70,7 +70,7 @@ const SignIn: FC = () => {
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
                 パスワード
-                <span className='text-red-600'>*</span>
+                <span className="text-red-600">*</span>
               </label>
               <div className="mt-1">
                 <input

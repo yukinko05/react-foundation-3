@@ -1,6 +1,12 @@
-import { Book } from './types';
+import { Book } from '../../types';
 
-const ReviewCard = ({ book }: Book) => {
+interface ReviewCardProps {
+  book: Book;
+}
+
+const ReviewCard = (props: ReviewCardProps) => {
+  const { book } = props;
+
   return (
     <li className="border border-gray-300 rounded-md">
       <p className="px-2 pt-3 text-xl text-gray-900">{book.title}</p>
