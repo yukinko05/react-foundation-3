@@ -3,8 +3,12 @@ import { useState } from 'react';
 import { FC } from 'react';
 import axios, { AxiosError } from 'axios';
 import { useCookies } from 'react-cookie';
-import { useNavigate, Link } from 'react-router-dom';
+import { Navigate, useNavigate, Link } from 'react-router-dom';
 import Compressor from 'compressorjs';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
+import { signIn } from '../auth/authSlice';
+
 interface SignUpForm {
   name: string;
   email: string;
@@ -15,6 +19,8 @@ const SignUp: FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [_cookies, setCookies] = useCookies();
   const [iconImg, setIconImg] = useState<Blob | File | null>(null);
+  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const {
@@ -54,6 +60,7 @@ const SignUp: FC = () => {
       const response = await axios.post('https://railway.bookreview.techtrain.dev/users', data);
       const token = response.data.token;
       setCookies('token', token);
+      dispatch(signIn());
 
       if (iconImg) {
         const formData = new FormData();
@@ -73,6 +80,8 @@ const SignUp: FC = () => {
       }
     }
   };
+
+  if (isAuthenticated) return <Navigate to="/" />;
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
