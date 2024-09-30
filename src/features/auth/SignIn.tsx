@@ -3,8 +3,10 @@ import { FC } from 'react';
 import axios from 'axios';
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
-import { useNavigate, Link } from 'react-router-dom';
-
+import { useNavigate, Navigate, Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
+import { signIn } from './authSlice';
 interface LoginForm {
   email: string;
   password: string;
@@ -13,7 +15,9 @@ interface LoginForm {
 const SignIn: FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [_cookies, setCookies] = useCookies();
+  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -26,11 +30,14 @@ const SignIn: FC = () => {
       const response = await axios.post('https://railway.bookreview.techtrain.dev/signin', data);
       const token = response.data.token;
       setCookies('token', token);
+      dispatch(signIn());
       navigate('/');
     } catch (error) {
       setErrorMessage(`ログインに失敗しました。${error}`);
     }
   };
+
+  if (isAuthenticated) return <Navigate to="/" />;
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
