@@ -9,3 +9,7 @@ export interface Book {
 export interface OffsetState {
   offset: number;
 }
+
+export interface AuthState {
+  isAuthenticated: boolean;
+}

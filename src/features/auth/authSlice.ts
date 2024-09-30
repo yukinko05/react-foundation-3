@@ -1,0 +1,22 @@
+import { createSlice } from '@reduxjs/toolkit';
+import { AuthState } from '../../types';
+import { Cookies } from 'react-cookie';
+
+const cookies = new Cookies();
+
+const initialState: AuthState = {
+  isAuthenticated: cookies.get('token') !== undefined,
+};
+
+export const authSlice = createSlice({
+  name: 'auth',
+  initialState,
+  reducers: {
+    signIn: (state) => {
+      state.isAuthenticated = true;
+    },
+  },
+});
+
+export const { signIn } = authSlice.actions;
+export default authSlice.reducer;
