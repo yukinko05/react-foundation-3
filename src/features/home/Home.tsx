@@ -2,17 +2,31 @@ import BookReviewList from '../bookReviews/BookReviewList';
 import { nextPage, previousPage } from '../bookReviews/offsetSlice';
 import { useDispatch } from 'react-redux';
 import Header from '../../components/Header';
-import { useCookies } from 'react-cookie';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
-  const [cookies] = useCookies(['token']);
-  const token = cookies.token;
+  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
 
   return (
     <main className="flex min-h-full flex-col px-6 py-12 lg:px-8">
-      <Header />
-      {token && (
+      <Header>
+        <div className="flex justify-end">
+          {isAuthenticated ? (
+            <div>ユーザー名がここに表示される</div>
+          ) : (
+            <Link
+              to="/login"
+              className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-4 rounded-md"
+            >
+              ログイン
+            </Link>
+          )}
+        </div>
+      </Header>
+      {isAuthenticated && (
         <div className="mt-10">
           <button
             onClick={() => dispatch(previousPage())}
