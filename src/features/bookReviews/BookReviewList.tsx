@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import { Book } from '../../types';
@@ -30,11 +30,13 @@ const BookReviewList = () => {
         );
         setBookReviews(response.data);
       } catch (error) {
-        setErrorMessage(`ログインに失敗しました。${error}`);
+        if (error instanceof AxiosError && error.response && error.response.data) {
+          setErrorMessage(error.response.data.ErrorMessageJP);
+        }
       }
     };
     fetchBooks();
-  }, [offset]);
+  }, [offset, token]);
 
   return (
     <div>
