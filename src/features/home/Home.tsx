@@ -2,17 +2,17 @@ import BookReviewList from '../bookReviews/BookReviewList';
 import { nextPage, previousPage } from '../bookReviews/offsetSlice';
 import { useDispatch } from 'react-redux';
 import Header from '../../components/Header';
-import { useCookies } from 'react-cookie';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
 
 const Home = () => {
-  const [cookies] = useCookies(['token']);
-  const token = cookies.token;
+  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
 
   return (
     <main className="flex min-h-full flex-col px-6 py-12 lg:px-8">
       <Header />
-      {token && (
+      {isAuthenticated && (
         <div className="mt-10">
           <button
             onClick={() => dispatch(previousPage())}
