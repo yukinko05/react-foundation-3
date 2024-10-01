@@ -5,6 +5,7 @@ import Header from '../../components/Header';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import { Link } from 'react-router-dom';
+import UserProfile from '../userProfile/UserProfile';
 
 const Home = () => {
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
@@ -15,7 +16,7 @@ const Home = () => {
       <Header>
         <div className="flex justify-end">
           {isAuthenticated ? (
-            <div>ユーザー名がここに表示される</div>
+            <UserProfile />
           ) : (
             <Link
               to="/login"

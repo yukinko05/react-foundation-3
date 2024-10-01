@@ -6,6 +6,10 @@ export interface Book {
   review: string;
 }
 
+export interface User {
+  name: string;
+  url: string;
+}
 export interface OffsetState {
   offset: number;
 }
