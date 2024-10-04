@@ -1,11 +1,11 @@
-import BookReviewList from '../bookReviews/BookReviewList';
-import { nextPage, previousPage } from '../bookReviews/offsetSlice';
+import BookReviewList from '../../features/bookReviews/BookReviewList';
+import { nextPage, previousPage } from '../../features/bookReviews/offsetSlice';
 import { useDispatch } from 'react-redux';
 import Header from '../../components/Header';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import { Link } from 'react-router-dom';
-import UserProfile from '../userProfile/UserProfile';
+import UserProfile from '../../features/userProfile/UserProfile';
 
 const Home = () => {
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);

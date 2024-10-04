@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import offsetReducer from '../features/bookReviews/offsetSlice';
-import authReducer from '../features/auth/authSlice';
+import authReducer from '../pages/auth/authSlice';
 
 export const store = configureStore({
   reducer: {
