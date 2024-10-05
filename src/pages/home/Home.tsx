@@ -16,7 +16,7 @@ const Home = () => {
       <Header>
         <div className="flex justify-end">
           {isAuthenticated ? (
-            <UserAvatar />
+            <Link to="/profile"><UserAvatar /></Link>
           ) : (
             <Link
               to="/login"
