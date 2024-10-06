@@ -6,6 +6,7 @@ import { fetchUserData } from '../../features/user/userSlice';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import imageCompression from '../../utils/imageCompression';
 
 const editProfileSchema = z.object({
   name: z
@@ -57,11 +58,8 @@ const EditProfile = () => {
     }
   }, [userData, reset]);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setValue('iconUrl', file, { shouldValidate: true });
-    }
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    imageCompression(e, setValue);
   };
 
   const onSubmit: SubmitHandler<EditProfile> = async (data) => {
@@ -84,7 +82,7 @@ const EditProfile = () => {
               type="file"
               id="iconUrl"
               accept=".jpg, .jpeg, .png"
-              {...register('iconUrl', { onChange: handleFileChange })}
+              {...register('iconUrl', { onChange: handleImageChange })}
               className="hidden"
             />
             {iconUrl && (
