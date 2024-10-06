@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../../app/store';
 import { useCookies } from 'react-cookie';
@@ -7,6 +7,8 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import imageCompression from '../../utils/imageCompression';
+import axios, { AxiosError } from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const editProfileSchema = z.object({
   name: z
@@ -16,16 +18,18 @@ const editProfileSchema = z.object({
     .min(1, {
       message: 'ユーザー名は1文字以上で入力してください',
     }),
-  iconUrl: z.union([z.string(), z.instanceof(File)]),
+  iconUrl: z.union([z.string(), z.instanceof(File)]).optional(),
 });
 
 type EditProfile = z.infer<typeof editProfileSchema>;
 
 const EditProfile = () => {
   const userData = useSelector((state: RootState) => state.user.userData);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const fetchDispatch = useAppDispatch();
   const [cookies] = useCookies(['token']);
   const token = cookies.token;
+  const navigate = useNavigate();
 
   const {
     register,
@@ -59,17 +63,58 @@ const EditProfile = () => {
   }, [userData, reset]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    imageCompression(e, setValue);
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      imageCompression(e, (compressedImage) => {
+        if (compressedImage) {
+          setValue('iconUrl', compressedImage);
+        }
+      });
+    } else {
+      setValue('iconUrl', undefined);
+    }
   };
 
   const onSubmit: SubmitHandler<EditProfile> = async (data) => {
-    console.log(data);
+    try {
+      await axios.put(
+        'https://railway.bookreview.techtrain.dev/users',
+        { name: data.name },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (data.iconUrl instanceof File) {
+        const formData = new FormData();
+        formData.append('icon', data.iconUrl);
+
+        await axios.post('https://railway.bookreview.techtrain.dev/uploads', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      }
+
+      navigate('/');
+    } catch (error) {
+      if (error instanceof AxiosError && error.response && error.response.data) {
+        setErrorMessage(error.response.data.ErrorMessageJP || 'エラーが発生しました。');
+      } else {
+        console.error('Unexpected error:', error);
+        setErrorMessage('不明なエラーが発生しました。');
+      }
+    }
   };
 
   return (
     <div>
       <main>
         <h1>プロフィールを編集</h1>
+        {errorMessage && <p>{errorMessage}</p>}
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <div>
             <label htmlFor="name">ユーザー名</label>
