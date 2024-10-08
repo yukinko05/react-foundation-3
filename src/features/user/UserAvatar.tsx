@@ -3,6 +3,8 @@ import { RootState, useAppDispatch } from '../../app/store';
 import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { fetchUserData } from './userSlice';
+import { FaCircleUser } from 'react-icons/fa6';
+
 const Users = () => {
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
   const userData = useSelector((state: RootState) => state.user.userData);
@@ -18,8 +20,14 @@ const Users = () => {
 
   return (
     <>
-      <img src={userData?.iconUrl} alt="ユーザー画像" />
-      <p>{userData?.name}</p>
+      <div className="flex items-center">
+        {userData?.iconUrl ? (
+          <img src={userData?.iconUrl} alt="ユーザー画像" className="w-10 h-10 rounded-full" />
+        ) : (
+          <FaCircleUser className="w-10 h-10" />
+        )}
+        <p className="ml-2">{userData?.name}</p>
+      </div>
     </>
   );
 };
