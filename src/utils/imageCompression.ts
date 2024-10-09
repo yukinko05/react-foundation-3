@@ -1,14 +1,10 @@
 import Compressor from 'compressorjs';
 import { UseFormSetValue } from 'react-hook-form';
-
-type FormValues = {
-  iconUrl: string | File;
-  name: string;
-};
+import { EditProfile } from '../pages/userProfile/EditProfile';
 
 const imageCompression = (
   e: React.ChangeEvent<HTMLInputElement>,
-  setValue: UseFormSetValue<FormValues>
+  setValue: UseFormSetValue<EditProfile>
 ) => {
   const file = e.target.files?.[0];
 
@@ -31,7 +27,7 @@ const imageCompression = (
         type: compressedFile.type,
         lastModified: Date.now(),
       });
-      setValue('iconUrl', newFile, { shouldValidate: true });
+      setValue('icon', newFile, { shouldValidate: true });
     },
     error: (error) => {
       console.error(error.message);

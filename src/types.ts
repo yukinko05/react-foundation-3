@@ -8,7 +8,7 @@ export interface Book {
 
 export interface User {
   name: string;
-  iconUrl: File | string | undefined;
+  iconUrl: string | undefined;
 }
 export interface OffsetState {
   offset: number;
