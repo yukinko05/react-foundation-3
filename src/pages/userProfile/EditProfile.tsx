@@ -10,6 +10,7 @@ import imageCompression from '../../utils/imageCompression';
 import axios, { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FaCircleUser } from 'react-icons/fa6';
+import { TbCameraPlus } from "react-icons/tb";
 
 const editProfileSchema = z.object({
   name: z
@@ -102,44 +103,52 @@ const EditProfile = () => {
   };
 
   return (
-    <div>
-      <main>
-        <h1>アカウント設定</h1>
-        <h2>プロフィール</h2>
-        {errorMessage && <p>{errorMessage}</p>}
-        <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          <div>
-            <label htmlFor="name">ユーザー名</label>
-            <input type="text" id="name" {...register('name')} />
-            {errors.name && <p>{errors.name.message}</p>}
-          </div>
-          <div>
-            <label htmlFor="icon">アイコン画像</label>
-            <input
-              type="file"
-              id="icon"
-              accept=".jpg, .jpeg, .png"
-              {...register('icon', { onChange: handleImageChange })}
-              className="hidden"
-            />
-            {previewImage ? (
-              <img
-                src={
-                  typeof previewImage === 'string'
-                    ? previewImage
-                    : previewImage instanceof File
-                      ? URL.createObjectURL(previewImage)
-                      : ''
-                }
-                alt="ユーザー画像プレビュー"
-                className="w-14 h-14 rounded-full"
+    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      <main className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <h1 className="mt-10 text-3xl font-bold leading-9 tracking-tight text-gray-900">アカウント設定</h1>
+        <h2 className="mt-10 text-3l font-bold leading-9 tracking-tight text-gray-900">プロフィール</h2>
+        {errorMessage && <p className="text-red-600">{errorMessage}</p>}
+        <form onSubmit={handleSubmit(onSubmit)} noValidate className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          <div className="flex justify-left">
+            <div className="relative w-14 h-14 hover:opacity-80 group">
+              <label htmlFor="icon" className='cursor-pointer'>
+                <TbCameraPlus className='stroke-blue-500 absolute right-0 bottom-0' />
+                {previewImage ? (
+                  <img
+                    src={
+                      typeof previewImage === 'string'
+                        ? previewImage
+                        : previewImage instanceof File
+                          ? URL.createObjectURL(previewImage)
+                          : ''
+                    }
+                    alt="ユーザー画像プレビュー"
+                    className="w-13 h-13 rounded-full"
+                  />
+                ) : (
+                  <FaCircleUser className="w-14 h-14" />
+                )}
+              </label>
+              <span className="opacity-0 invisible rounded text-[12px]
+  font-bold text-white py-1 px-2 mt-4 bg-slate-600 top-11 -left-3
+  group-hover:visible opacity-100 absolute whitespace-nowrap">プロフィールアイコンを更新します
+              </span>
+              <input
+                type="file"
+                id="icon"
+                accept=".jpg, .jpeg, .png"
+                {...register('icon', { onChange: handleImageChange })}
+                className="hidden"
               />
-            ) : (
-              <FaCircleUser className="w-14 h-14" />
-            )}
-            {errors.icon && <p>{errors.icon.message}</p>}
+              {errors.icon && <p>{errors.icon.message}</p>}
+            </div>
+            <div className="flex flex-col ml-4">
+              <label htmlFor="name" className=''>ユーザー名</label>
+              <input type="text" id="name" {...register('name')} />
+              {errors.name && <p>{errors.name.message}</p>}
+            </div>
           </div>
-          <button type="submit">変更を保存</button>
+          <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-4 mt-4 rounded-md">変更を保存</button>
         </form>
       </main>
     </div>
