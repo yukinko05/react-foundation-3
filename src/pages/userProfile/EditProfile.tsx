@@ -9,6 +9,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import imageCompression from '../../utils/imageCompression';
 import axios, { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { FaCircleUser } from 'react-icons/fa6';
 
 const editProfileSchema = z.object({
   name: z
@@ -18,10 +19,10 @@ const editProfileSchema = z.object({
     .min(1, {
       message: 'ユーザー名は1文字以上で入力してください',
     }),
-  iconUrl: z.union([z.string(), z.instanceof(File)]).optional(),
+  icon: z.union([z.string(), z.instanceof(File)]).optional(),
 });
 
-type EditProfile = z.infer<typeof editProfileSchema>;
+export type EditProfile = z.infer<typeof editProfileSchema>;
 
 const EditProfile = () => {
   const userData = useSelector((state: RootState) => state.user.userData);
@@ -30,24 +31,18 @@ const EditProfile = () => {
   const [cookies] = useCookies(['token']);
   const token = cookies.token;
   const navigate = useNavigate();
+  const [previewImage, setPreviewImage] = useState<string | File | undefined>(userData?.iconUrl);
 
   const {
     register,
     handleSubmit,
-    formState: { isValid, errors },
+    formState: { errors },
     setValue,
-    watch,
-    reset,
   } = useForm<EditProfile>({
-    mode: 'onBlur',
+    mode: 'onChange',
+    defaultValues: { name: '' },
     resolver: zodResolver(editProfileSchema),
-    defaultValues: {
-      name: userData?.name,
-      iconUrl: userData?.iconUrl,
-    },
   });
-
-  const iconUrl = watch('iconUrl') as string | File | undefined;
 
   useEffect(() => {
     fetchDispatch(fetchUserData(token));
@@ -55,23 +50,19 @@ const EditProfile = () => {
 
   useEffect(() => {
     if (userData) {
-      reset({
-        name: userData.name,
-        iconUrl: userData.iconUrl,
-      });
+      setValue('name', userData.name);
+      setValue('icon', userData.iconUrl);
+      setPreviewImage(userData.iconUrl);
     }
-  }, [userData, reset]);
+  }, [userData, setValue]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files.length > 0) {
-      imageCompression(e, (compressedImage) => {
-        if (compressedImage) {
-          setValue('iconUrl', compressedImage);
-        }
-      });
+      imageCompression(e, setValue);
+      setPreviewImage(files[0]);
     } else {
-      setValue('iconUrl', undefined);
+      setValue('icon', undefined);
     }
   };
 
@@ -87,9 +78,9 @@ const EditProfile = () => {
         }
       );
 
-      if (data.iconUrl instanceof File) {
+      if (data.icon instanceof File) {
         const formData = new FormData();
-        formData.append('icon', data.iconUrl);
+        formData.append('icon', data.icon);
 
         await axios.post('https://railway.bookreview.techtrain.dev/uploads', formData, {
           headers: {
@@ -113,7 +104,8 @@ const EditProfile = () => {
   return (
     <div>
       <main>
-        <h1>プロフィールを編集</h1>
+        <h1>アカウント設定</h1>
+        <h2>プロフィール</h2>
         {errorMessage && <p>{errorMessage}</p>}
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <div>
@@ -122,31 +114,32 @@ const EditProfile = () => {
             {errors.name && <p>{errors.name.message}</p>}
           </div>
           <div>
-            <label htmlFor="iconUrl">アイコン画像</label>
+            <label htmlFor="icon">アイコン画像</label>
             <input
               type="file"
-              id="iconUrl"
+              id="icon"
               accept=".jpg, .jpeg, .png"
-              {...register('iconUrl', { onChange: handleImageChange })}
+              {...register('icon', { onChange: handleImageChange })}
               className="hidden"
             />
-            {iconUrl && (
+            {previewImage ? (
               <img
                 src={
-                  typeof iconUrl === 'string'
-                    ? iconUrl
-                    : iconUrl instanceof File
-                      ? URL.createObjectURL(iconUrl)
+                  typeof previewImage === 'string'
+                    ? previewImage
+                    : previewImage instanceof File
+                      ? URL.createObjectURL(previewImage)
                       : ''
                 }
                 alt="ユーザー画像プレビュー"
+                className="w-14 h-14 rounded-full"
               />
+            ) : (
+              <FaCircleUser className="w-14 h-14" />
             )}
-            {errors.iconUrl && <p>{errors.iconUrl.message}</p>}
+            {errors.icon && <p>{errors.icon.message}</p>}
           </div>
-          <button type="submit" disabled={!isValid}>
-            変更を保存
-          </button>
+          <button type="submit">変更を保存</button>
         </form>
       </main>
     </div>
