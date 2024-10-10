@@ -6,17 +6,33 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import { Link } from 'react-router-dom';
 import UserAvatar from '../../features/user/UserAvatar';
+import { signOut } from '../auth/authSlice';
+import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
+  const [_cookies, _setCookie, removeCookie] = useCookies(['token']);
+  const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    dispatch(signOut());
+    removeCookie('token');
+    navigate('/login');
+  };
 
   return (
     <main className="flex min-h-full flex-col px-6 py-12 lg:px-8">
       <Header>
         <div className="flex justify-end">
           {isAuthenticated ? (
-            <Link to="/profile"><UserAvatar /></Link>
+            <div>
+              <Link to="/profile">
+                <UserAvatar />
+              </Link>
+              <button onClick={handleSignOut}>ログアウト</button>
+            </div>
           ) : (
             <Link
               to="/login"
