@@ -32,6 +32,9 @@ const Home = () => {
                 <UserAvatar />
               </Link>
               <button onClick={handleSignOut}>ログアウト</button>
+              <Link to="/new">
+                レビュー新規投稿
+              </Link>
             </div>
           ) : (
             <Link
