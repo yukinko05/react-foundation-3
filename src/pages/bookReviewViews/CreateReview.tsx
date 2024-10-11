@@ -13,7 +13,7 @@ const CreateReview = () => {
             <input type="text" id="url" />
           </div>
           <div>
-            <label htmlFor="detail">レビュー</label>
+            <label htmlFor="detail">詳細</label>
             <textarea id="detail" />
           </div>
           <div>
