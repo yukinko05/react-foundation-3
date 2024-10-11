@@ -1,6 +1,10 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
+import { useCookies } from 'react-cookie';
+import axios, { AxiosError } from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const createReviewSchema = z.object({
   title: z.string().min(1, { message: 'タイトルは必須です' }),
@@ -12,6 +16,11 @@ const createReviewSchema = z.object({
 export type CreateReview = z.infer<typeof createReviewSchema>;
 
 const CreateReview = () => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [cookies] = useCookies(['token']);
+  const token = cookies.token;
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -22,7 +31,21 @@ const CreateReview = () => {
   });
 
   const onSubmit: SubmitHandler<CreateReview> = async (data) => {
-    console.log(data);
+    try {
+      await axios.post('https://railway.bookreview.techtrain.dev/books', data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      navigate('/');
+    } catch (error) {
+      if (error instanceof AxiosError && error.response && error.response.data) {
+        setErrorMessage(error.response.data.ErrorMessageJP || 'エラーが発生しました。');
+      } else {
+        console.error('Unexpected error:', error);
+        setErrorMessage('不明なエラーが発生しました。');
+      }
+    }
   };
 
   return (
@@ -30,6 +53,7 @@ const CreateReview = () => {
       <main>
         <h1>書籍レビューの投稿</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
+          {errorMessage && <p className="text-red-600">{errorMessage}</p>}
           <div>
             <label htmlFor="title">
               タイトル
@@ -53,10 +77,14 @@ const CreateReview = () => {
           </div>
           <div>
             <label htmlFor="detail">
-              詳細
+              書籍概要
               <span className="text-red-600">*</span>
             </label>
-            <textarea id="detail" {...register('detail')} placeholder="詳細を入力してください" />
+            <textarea
+              id="detail"
+              {...register('detail')}
+              placeholder="書籍の概要を入力してください"
+            />
             {errors.detail && <p className="text-red-600">{errors.detail.message}</p>}
           </div>
           <div>
