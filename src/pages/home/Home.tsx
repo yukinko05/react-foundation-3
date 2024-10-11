@@ -32,10 +32,13 @@ const Home = () => {
                 <UserAvatar />
               </Link>
               <button onClick={handleSignOut}>ログアウト</button>
+              <Link to="/new">
+                レビュー新規投稿
+              </Link>
             </div>
           ) : (
             <Link
-              to="/login"
+              to="/signin"
               className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-4 rounded-md"
             >
               ログイン
