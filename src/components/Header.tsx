@@ -6,8 +6,8 @@ type HeaderProps = {
 
 const Header = ({ children }: HeaderProps) => {
   return (
-    <div>
-      <h1 className="text-center text-4xl text-gray-900">Book Reviews</h1>
+    <div className="sticky top-0 bg-white border-b border-gray-200 pb-4">
+      <h1 className="text-center text-4xl text-gray-900 sticky top-6">Book Reviews</h1>
       {children}
     </div>
   );

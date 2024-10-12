@@ -17,7 +17,7 @@ const ReviewCard = (props: ReviewCardProps) => {
         </a>
       </p>
       <p className="px-2 pt-3 text-sm text-gray-900">レビュワー：{book.reviewer}</p>
-      <p className="px-2 py-1 text-sm text-gray-900">{book.review}</p>
+      <p className="px-2 py-1 text-sm text-gray-900">{book.detail}</p>
     </li>
   );
 };
