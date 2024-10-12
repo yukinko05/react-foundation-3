@@ -24,7 +24,7 @@ const Home = () => {
   const handleSignOut = () => {
     dispatch(signOut());
     removeCookie('token');
-    navigate('/login');
+    navigate('/signin');
   };
 
   return (
