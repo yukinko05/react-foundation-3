@@ -1,9 +1,11 @@
 export interface Book {
-  id: number;
+  id: string;
   title: string;
   url: string;
-  reviewer: string;
   review: string;
+  reviewer: string;
+  detail: string;
+  isMine: boolean;
 }
 
 export interface User {
