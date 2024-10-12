@@ -7,7 +7,7 @@ import { Navigate, useNavigate, Link } from 'react-router-dom';
 import Compressor from 'compressorjs';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
-import { signIn } from '../auth/authSlice';
+import { signIn } from '../../features/auth/authSlice';
 
 interface SignUpForm {
   name: string;

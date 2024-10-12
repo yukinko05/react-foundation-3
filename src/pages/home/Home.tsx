@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import { Link } from 'react-router-dom';
 import UserAvatar from '../../features/user/UserAvatar';
-import { signOut } from '../auth/authSlice';
+import { signOut } from '../../features/auth/authSlice';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';

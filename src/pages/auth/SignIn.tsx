@@ -6,7 +6,7 @@ import { useCookies } from 'react-cookie';
 import { useNavigate, Navigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
-import { signIn } from './authSlice';
+import { signIn } from '../../features/auth/authSlice';
 interface LoginForm {
   email: string;
   password: string;

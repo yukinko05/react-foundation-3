@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import offsetReducer from '../features/bookReviews/offsetSlice';
-import authReducer from '../pages/auth/authSlice';
+import authReducer from '../features/auth/authSlice';
 import userReducer from '../features/user/userSlice';
 import { useDispatch } from 'react-redux';
 
