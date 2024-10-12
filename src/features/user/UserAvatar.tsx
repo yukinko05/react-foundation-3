@@ -24,7 +24,9 @@ const Users = () => {
         {userData?.iconUrl ? (
           <img src={userData?.iconUrl} alt="ユーザー画像" className="w-10 h-10 rounded-full" />
         ) : (
-          <FaCircleUser className="w-10 h-10" />
+          <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+            <FaCircleUser className="w-10 h-10" />
+          </div>
         )}
         <p className="ml-2">{userData?.name}</p>
       </div>
