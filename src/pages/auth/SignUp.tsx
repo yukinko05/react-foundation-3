@@ -8,6 +8,7 @@ import Compressor from 'compressorjs';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import { signIn } from '../../features/auth/authSlice';
+import Header from '../../components/Header';
 
 interface SignUpForm {
   name: string;
@@ -85,6 +86,7 @@ const SignUp: FC = () => {
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      <Header />
       <main className="sm:mx-auto sm:w-full sm:max-w-sm">
         <h1 className="mt-10 text-center text-3xl font-bold leading-9 tracking-tight text-gray-900">
           新規登録
@@ -183,7 +185,7 @@ const SignUp: FC = () => {
           </form>
         </div>
         <div className=" mt-2.5 text-right">
-          <Link to="/login" className="text-blue-600 hover:text-blue-400">
+          <Link to="/signin" className="text-blue-600 hover:text-blue-400">
             ログインはこちら
           </Link>
         </div>

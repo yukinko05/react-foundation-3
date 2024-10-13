@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import axios, { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Header from '../../components/Header';
 
 const createReviewSchema = z.object({
   title: z.string().min(1, { message: 'タイトルは必須です' }),
@@ -50,7 +51,8 @@ const CreateReview = () => {
 
   return (
     <div className="max-w-2xl mx-auto mt-4 sm:mt-8 px-4 sm:px-6 lg:px-8">
-      <main className="bg-white rounded-lg shadow-md p-4 sm:p-6 lg:p-8">
+      <Header />
+      <main className="bg-white rounded-lg shadow-md p-4 mt-8 sm:p-6 lg:p-8">
         <h1 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-800">
           書籍レビューの投稿
         </h1>
