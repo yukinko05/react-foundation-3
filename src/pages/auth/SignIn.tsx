@@ -6,7 +6,9 @@ import { useCookies } from 'react-cookie';
 import { useNavigate, Navigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
-import { signIn } from './authSlice';
+import { signIn } from '../../features/auth/authSlice';
+import Header from '../../components/Header';
+
 interface LoginForm {
   email: string;
   password: string;
@@ -41,6 +43,7 @@ const SignIn: FC = () => {
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      <Header />
       <main className="sm:mx-auto sm:w-full sm:max-w-sm">
         <h1 className="mt-10 text-center text-3xl font-bold leading-9 tracking-tight text-gray-900">
           ログイン
