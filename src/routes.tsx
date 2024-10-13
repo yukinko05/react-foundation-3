@@ -5,6 +5,7 @@ import SignUp from './pages/auth/SignUp';
 import Home from './pages/home/Home';
 import EditProfile from './pages/userProfile/EditProfile';
 import CreateReview from './pages/bookReviewViews/CreateReview';
+import NotFound from './pages/notFound/NotFound';
 
 export default function RoutesComponent() {
   return (
@@ -28,7 +29,7 @@ export default function RoutesComponent() {
           </RequireAuth>
         }
       />
-      {/*TODO:NotFoundページ */}
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
