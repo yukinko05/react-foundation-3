@@ -24,11 +24,11 @@ const Users = () => {
         {userData?.iconUrl ? (
           <img src={userData?.iconUrl} alt="ユーザー画像" className="w-10 h-10 rounded-full" />
         ) : (
-          <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+          <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center max-sm:w-7 max-sm:h-7">
             <FaCircleUser className="w-10 h-10" />
           </div>
         )}
-        <p className="ml-2">{userData?.name}</p>
+        <p className="ml-2 max-sm:text-sm">{userData?.name}</p>
       </div>
     </>
   );

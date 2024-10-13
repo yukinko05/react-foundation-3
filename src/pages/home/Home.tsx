@@ -32,9 +32,9 @@ const Home = () => {
       <Header>
         <div>
           {isAuthenticated && (
-            <div className="flex justify-between">
+            <div className="flex justify-between mt-2">
               <UserAvatar />
-              <button onClick={handleMenuOpen} type="button" className="z-10 space-y-2">
+              <button onClick={handleMenuOpen} type="button" className="z-10 space-y-2  ml-2">
                 <div
                   className={
                     openMenu
@@ -72,11 +72,6 @@ const Home = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/new" className="py-2 inline-block hover:opacity-30">
-                      レビュー新規投稿
-                    </Link>
-                  </li>
-                  <li>
                     <button onClick={handleSignOut} className="py-2 inline-block hover:opacity-30">
                       ログアウト
                     </button>
@@ -86,12 +81,19 @@ const Home = () => {
             </div>
           )}
           {!isAuthenticated && (
-            <div className="text-right">
+            <div className="text-right mt-2 max-sm:flex max-sm:justify-center max-sm:mt-4">
               <Link
                 to="/signin"
-                className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md text-right"
+                className="bg-blue-500 hover:bg-blue-600 text-white text-center py-2 px-4 rounded-md max-sm:w-full"
               >
                 ログイン
+              </Link>
+
+              <Link
+                to="/signup"
+                className="bg-white hover:bg-gray-100 text-blue-600 text-center border border-blue-600 py-2 px-4 ml-2 rounded-md max-sm:w-full"
+              >
+                新規登録
               </Link>
             </div>
           )}
@@ -99,19 +101,29 @@ const Home = () => {
       </Header>
 
       {isAuthenticated && (
-        <div className="mt-10">
-          <button
-            onClick={() => dispatch(previousPage())}
-            className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-4 rounded-md"
-          >
-            前へ
-          </button>
-          <button
-            onClick={() => dispatch(nextPage())}
-            className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-4 ml-2 rounded-md"
-          >
-            次へ
-          </button>
+        <div className="flex justify-between">
+          <div className="mt-10 flex">
+            <button
+              onClick={() => dispatch(previousPage())}
+              className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-4 rounded-md max-sm:w-full"
+            >
+              前へ
+            </button>
+            <button
+              onClick={() => dispatch(nextPage())}
+              className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-4 ml-2 rounded-md max-sm:w-full"
+            >
+              次へ
+            </button>
+          </div>
+          <div>
+            <Link
+              to="/new"
+              className="py-2 px-4 mt-10 bg-blue-500 text-white rounded-md inline-block hover:bg-blue-600"
+            >
+              新規レビュー投稿
+            </Link>
+          </div>
         </div>
       )}
       <BookReviewList />

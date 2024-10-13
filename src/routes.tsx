@@ -12,8 +12,22 @@ export default function RoutesComponent() {
       <Route path="/" element={<Home />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/profile" element={<RequireAuth><EditProfile /></RequireAuth>} />
-      <Route path="/new" element={<RequireAuth><CreateReview /></RequireAuth>} />
+      <Route
+        path="/profile"
+        element={
+          <RequireAuth>
+            <EditProfile />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="/new"
+        element={
+          <RequireAuth>
+            <CreateReview />
+          </RequireAuth>
+        }
+      />
       {/*TODO:NotFoundページ */}
     </Routes>
   );

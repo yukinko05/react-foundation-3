@@ -16,7 +16,7 @@ const BookReviewList = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       if (!token) {
-        setErrorMessage('新規登録またはログインすると書籍レビューが見れるようになります');
+        setErrorMessage('ログインまたは新規登録すると書籍レビューが見れるようになります');
         return;
       }
       try {
