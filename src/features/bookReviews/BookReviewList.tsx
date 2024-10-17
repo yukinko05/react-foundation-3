@@ -41,7 +41,7 @@ const BookReviewList = () => {
   return (
     <div>
       {errorMessage && <p className="text-red-600 text-center mt-10">{errorMessage}</p>}
-      <ul className="grid grid-cols-1 gap-4 mt-2 sm:grid-cols-2">
+      <ul className="grid grid-cols-1 gap-4 mt-3 sm:grid-cols-2">
         {bookReviews.map((book: Book) => (
           <ReviewCard key={book.id} book={book} />
         ))}

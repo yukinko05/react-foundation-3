@@ -8,7 +8,7 @@ const ReviewCard = (props: ReviewCardProps) => {
   const { book } = props;
 
   return (
-    <li className="border border-gray-300 rounded-md pt-2 px-2 hover:opacity-50">
+    <li className="border border-gray-300 rounded-md py-3 px-2 hover:bg-slate-200 bg-gray-50">
       <Link to={`/detail/${book.id}`} target="_blank" className="text-xl text-gray-900">
         <div className="border-b border-gray-300 py-2">
           <p className="line-clamp-2">{book.title}</p>
