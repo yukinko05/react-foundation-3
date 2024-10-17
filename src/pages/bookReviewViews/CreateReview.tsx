@@ -50,7 +50,7 @@ const CreateReview = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto mt-4 sm:mt-8 px-4 sm:px-6 lg:px-8">
+    <div className="max-w-2xl mx-auto mt-4 px-4 sm:mt-8 sm:px-6 lg:px-8">
       <Header />
       <main className="bg-white rounded-lg shadow-md p-4 mt-8 sm:p-6 lg:p-8">
         <h1 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-gray-800">
