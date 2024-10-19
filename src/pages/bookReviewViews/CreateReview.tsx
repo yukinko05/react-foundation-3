@@ -6,7 +6,7 @@ import { useCookies } from 'react-cookie';
 import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
-import axiosInstance from '../../api/axiosInstance';
+import * as bookReviewService from '../../services/bookReviewService';
 
 const createReviewSchema = z.object({
   title: z.string().min(1, { message: 'タイトルは必須です' }),
@@ -34,11 +34,7 @@ const CreateReview = () => {
 
   const onSubmit: SubmitHandler<CreateReview> = async (data) => {
     try {
-      await axiosInstance.post('/books', data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await bookReviewService.createBookReview(data, token)
       navigate('/');
     } catch (error) {
       if (error instanceof AxiosError && error.response && error.response.data) {

@@ -5,10 +5,10 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Book } from '../../types';
 import { useCookies } from 'react-cookie';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../../api/axiosInstance';
+import * as bookReviewService from '../../services/bookReviewService';
 
 const editReviewSchema = z.object({
   title: z.string().min(1, { message: 'タイトルは必須です' }),
@@ -45,13 +45,14 @@ const EditBookReview = () => {
 
   useEffect(() => {
     const fetchBooks = async () => {
+      if (!id) {
+        return;
+      }
+
       try {
-        const response = await axios.get(`https://railway.bookreview.techtrain.dev/books/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setBookReviews(response.data);
+        const bookReview = await bookReviewService.fetchBookReviewDetail(id, token);
+
+        setBookReviews(bookReview);
       } catch (error) {
         if (error instanceof AxiosError && error.response && error.response.data) {
           setErrorMessage(error.response.data.ErrorMessageJP);
@@ -71,12 +72,12 @@ const EditBookReview = () => {
   }, [bookReviews, setValue]);
 
   const handleDelete: SubmitHandler<EditReview> = async () => {
+    if (!id) {
+      return;
+    }
+
     try {
-      await axiosInstance.delete(`/books/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await bookReviewService.deleteBookReview(id, token);
       navigate('/');
     } catch (error) {
       if (error instanceof AxiosError && error.response && error.response.data) {
@@ -89,12 +90,12 @@ const EditBookReview = () => {
   };
 
   const handleEdit: SubmitHandler<EditReview> = async (data) => {
+    if (!id) {
+      return;
+    }
+
     try {
-      await axiosInstance.put(`/books/${id}`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await bookReviewService.updateBookReview(id, data, token)
       navigate('/');
     } catch (error) {
       if (error instanceof AxiosError && error.response && error.response.data) {
