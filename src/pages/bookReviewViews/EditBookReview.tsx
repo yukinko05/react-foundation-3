@@ -7,6 +7,7 @@ import { Book } from '../../types';
 import { useCookies } from 'react-cookie';
 import axios, { AxiosError } from 'axios';
 import { useParams } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 const editReviewSchema = z.object({
   title: z.string().min(1, { message: 'タイトルは必須です' }),
@@ -23,6 +24,7 @@ const EditBookReview = () => {
   const [cookies] = useCookies(['token']);
   const token = cookies.token;
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -66,6 +68,42 @@ const EditBookReview = () => {
       setValue('review', bookReviews.review);
     }
   }, [bookReviews, setValue]);
+
+  const handleDelete: SubmitHandler<EditReview> = async () => {
+    try {
+      await axios.delete(`https://railway.bookreview.techtrain.dev/books/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      navigate('/');
+    } catch (error) {
+      if (error instanceof AxiosError && error.response && error.response.data) {
+        setErrorMessage(error.response.data.ErrorMessageJP || 'エラーが発生しました。');
+      } else {
+        console.error('Unexpected error:', error);
+        setErrorMessage('不明なエラーが発生しました。');
+      }
+    }
+  };
+
+  const handleEdit: SubmitHandler<EditReview> = async (data) => {
+    try {
+      await axios.put(`https://railway.bookreview.techtrain.dev/books/${id}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      navigate('/');
+    } catch (error) {
+      if (error instanceof AxiosError && error.response && error.response.data) {
+        setErrorMessage(error.response.data.ErrorMessageJP || 'エラーが発生しました。');
+      } else {
+        console.error('Unexpected error:', error);
+        setErrorMessage('不明なエラーが発生しました。');
+      }
+    }
+  };
 
   return (
     <div className="bg-slate-100 min-h-screen">
@@ -139,13 +177,15 @@ const EditBookReview = () => {
           </div>
           <div className="flex justify-end">
             <button
-              type="submit"
+              type="button"
+              onClick={handleSubmit(handleDelete)}
               className="bg-red-500 hover:bg-red-600 text-white py-1 px-4 ml-2 rounded-md max-sm:w-full"
             >
               削除
             </button>
             <button
-              type="submit"
+              type="button"
+              onClick={handleSubmit(handleEdit)}
               className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-4 ml-2 rounded-md max-sm:w-full"
             >
               変更
