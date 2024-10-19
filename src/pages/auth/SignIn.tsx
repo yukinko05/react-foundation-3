@@ -1,6 +1,5 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { FC } from 'react';
-import axios from 'axios';
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate, Navigate, Link } from 'react-router-dom';
@@ -8,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import { signIn } from '../../features/auth/authSlice';
 import Header from '../../components/Header';
+import axiosInstance from '../../api/axiosInstance';
 
 interface LoginForm {
   email: string;
@@ -29,7 +29,7 @@ const SignIn: FC = () => {
 
   const onSubmit: SubmitHandler<LoginForm> = async (data) => {
     try {
-      const response = await axios.post('https://railway.bookreview.techtrain.dev/signin', data);
+      const response = await axiosInstance.post('https://railway.bookreview.techtrain.dev/signin', data);
       const token = response.data.token;
       setCookies('token', token);
       dispatch(signIn());

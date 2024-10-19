@@ -8,6 +8,7 @@ import { useCookies } from 'react-cookie';
 import axios, { AxiosError } from 'axios';
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../../api/axiosInstance';
 
 const editReviewSchema = z.object({
   title: z.string().min(1, { message: 'タイトルは必須です' }),
@@ -71,7 +72,7 @@ const EditBookReview = () => {
 
   const handleDelete: SubmitHandler<EditReview> = async () => {
     try {
-      await axios.delete(`https://railway.bookreview.techtrain.dev/books/${id}`, {
+      await axiosInstance.delete(`https://railway.bookreview.techtrain.dev/books/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -89,7 +90,7 @@ const EditBookReview = () => {
 
   const handleEdit: SubmitHandler<EditReview> = async (data) => {
     try {
-      await axios.put(`https://railway.bookreview.techtrain.dev/books/${id}`, data, {
+      await axiosInstance.put(`https://railway.bookreview.techtrain.dev/books/${id}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

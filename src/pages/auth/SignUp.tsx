@@ -1,7 +1,7 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useState } from 'react';
 import { FC } from 'react';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { useCookies } from 'react-cookie';
 import { Navigate, useNavigate, Link } from 'react-router-dom';
 import Compressor from 'compressorjs';
@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import { signIn } from '../../features/auth/authSlice';
 import Header from '../../components/Header';
+import axiosInstance from '../../api/axiosInstance';
 
 interface SignUpForm {
   name: string;
@@ -58,7 +59,7 @@ const SignUp: FC = () => {
 
   const onSubmit: SubmitHandler<SignUpForm> = async (data) => {
     try {
-      const response = await axios.post('https://railway.bookreview.techtrain.dev/users', data);
+      const response = await axiosInstance.post('https://railway.bookreview.techtrain.dev/users', data);
       const token = response.data.token;
       setCookies('token', token);
       dispatch(signIn());
@@ -67,7 +68,7 @@ const SignUp: FC = () => {
         const formData = new FormData();
         formData.append('icon', iconImg);
 
-        await axios.post('https://railway.bookreview.techtrain.dev/uploads', formData, {
+        await axiosInstance.post('https://railway.bookreview.techtrain.dev/uploads', formData, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

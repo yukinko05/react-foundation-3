@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import { Book } from '../../types';
 import ReviewCard from './ReviewCard';
 import { useCookies } from 'react-cookie';
+import axiosInstance from '../../api/axiosInstance';
 
 const BookReviewList = () => {
   const offset = useSelector((state: RootState) => state.offset.offset);
@@ -20,7 +21,7 @@ const BookReviewList = () => {
         return;
       }
       try {
-        const response = await axios.get(
+        const response = await axiosInstance.get(
           `https://railway.bookreview.techtrain.dev/books?offset=${offset}`,
           {
             headers: {

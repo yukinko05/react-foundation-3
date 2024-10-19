@@ -3,9 +3,10 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
+import axiosInstance from '../../api/axiosInstance';
 
 const createReviewSchema = z.object({
   title: z.string().min(1, { message: 'タイトルは必須です' }),
@@ -33,7 +34,7 @@ const CreateReview = () => {
 
   const onSubmit: SubmitHandler<CreateReview> = async (data) => {
     try {
-      await axios.post('https://railway.bookreview.techtrain.dev/books', data, {
+      await axiosInstance.post('/books', data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
