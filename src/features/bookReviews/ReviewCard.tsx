@@ -26,23 +26,24 @@ const ReviewCard = (props: ReviewCardProps) => {
   };
 
   return (
-    <li className="border border-gray-300 rounded-md py-3 px-2 hover:bg-slate-200 bg-gray-50">
+    <li className="border border-gray-300 rounded-md py-3 px-2">
       <div className="border-b border-gray-300 py-2">
         <p className="line-clamp-2">{book.title}</p>
       </div>
       <p className=" px-2 py-3 text-sm text-gray-900">レビュワー：{book.reviewer}</p>
       <p className="px-2 pt-2 text-sm mt-1 text-gray-900 truncate">{book.review}</p>
-      <div className="flex justify-stretch text-center mt-4">
+      <div className="flex justify-between gap-2 mt-4">
         <Link
           to={`/detail/${book.id}`}
           onClick={handleClickDetail}
-          className="w-full text-md text-gray-900"
+          className="w-full bg-blue-500 text-white py-2 px-4 rounded-md text-center text-md hover:bg-blue-600 transition-colors duration-300"
         >
           詳細
         </Link>
 
         {book.isMine && (
-          <Link to={`/edit/${book.id}`} className="w-full text-md text-gray-900">
+          <Link to={`/edit/${book.id}`} className="w-full bg-green-500 text-white py-2 px-4 rounded-md text-center text-md hover:bg-green-600 transition-colors duration-300"
+          >
             編集
           </Link>
         )}
