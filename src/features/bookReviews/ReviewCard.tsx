@@ -42,7 +42,7 @@ const ReviewCard = (props: ReviewCardProps) => {
         </Link>
 
         {book.isMine && (
-          <Link to={`/edit/${book.id}`} target="_blank" className="w-full text-md text-gray-900">
+          <Link to={`/edit/${book.id}`} className="w-full text-md text-gray-900">
             編集
           </Link>
         )}
