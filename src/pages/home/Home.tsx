@@ -83,7 +83,7 @@ const Home = () => {
           <div className="text-right mt-2 max-sm:flex max-sm:justify-center max-sm:mt-4">
             <Link
               to="/signin"
-              className="bg-blue-500 hover:bg-blue-600 text-white text-center py-2 px-4 rounded-md max-sm:w-full"
+              className="bg-blue-600 hover:bg-blue-700 text-white text-center py-2 px-4 rounded-md max-sm:w-full"
             >
               ログイン
             </Link>
@@ -103,13 +103,13 @@ const Home = () => {
             <div className="mt-10">
               <button
                 onClick={() => dispatch(previousPage())}
-                className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-4 rounded-md max-sm:w-full"
+                className="bg-blue-600 hover:bg-blue-700 text-white py-1 px-4 rounded-md max-sm:w-full"
               >
                 前へ
               </button>
               <button
                 onClick={() => dispatch(nextPage())}
-                className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-4 ml-2 rounded-md max-sm:w-full"
+                className="bg-blue-600 hover:bg-blue-700 text-white py-1 px-4 ml-2 rounded-md max-sm:w-full"
               >
                 次へ
               </button>

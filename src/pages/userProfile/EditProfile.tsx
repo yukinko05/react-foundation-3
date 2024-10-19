@@ -170,7 +170,7 @@ const EditProfile = () => {
               <div className="flex justify-end">
                 <button
                   type="submit"
-                  className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-4 rounded-md max-sm:w-full"
+                  className="bg-blue-600 hover:bg-blue-700 text-white py-1 px-4 rounded-md max-sm:w-full"
                 >
                   変更を保存
                 </button>

@@ -126,7 +126,7 @@ const CreateReview = () => {
           <div className="flex justify-end">
             <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-4 ml-2 rounded-md max-sm:w-full"
+              className="bg-blue-600 hover:bg-blue-700 text-white py-1 px-4 ml-2 rounded-md max-sm:w-full"
             >
               投稿
             </button>

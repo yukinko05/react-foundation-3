@@ -180,14 +180,14 @@ const EditBookReview = () => {
             <button
               type="button"
               onClick={handleSubmit(handleDelete)}
-              className="bg-red-500 hover:bg-red-600 text-white py-1 px-4 ml-2 rounded-md max-sm:w-full"
+              className="bg-red-600 hover:bg-red-700 text-white py-1 px-4 ml-2 rounded-md max-sm:w-full"
             >
               削除
             </button>
             <button
               type="button"
               onClick={handleSubmit(handleEdit)}
-              className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-4 ml-2 rounded-md max-sm:w-full"
+              className="bg-blue-600 hover:bg-blue-700 text-white py-1 px-4 ml-2 rounded-md max-sm:w-full"
             >
               変更
             </button>
