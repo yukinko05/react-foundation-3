@@ -59,7 +59,7 @@ const SignUp: FC = () => {
 
   const onSubmit: SubmitHandler<SignUpForm> = async (data) => {
     try {
-      const response = await axiosInstance.post('https://railway.bookreview.techtrain.dev/users', data);
+      const response = await axiosInstance.post('/users', data);
       const token = response.data.token;
       setCookies('token', token);
       dispatch(signIn());
@@ -68,7 +68,7 @@ const SignUp: FC = () => {
         const formData = new FormData();
         formData.append('icon', iconImg);
 
-        await axiosInstance.post('https://railway.bookreview.techtrain.dev/uploads', formData, {
+        await axiosInstance.post('/uploads', formData, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

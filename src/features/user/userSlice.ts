@@ -7,7 +7,7 @@ export const fetchUserData = createAsyncThunk<User, string>(
   'users/fetchUserData',
   async (token: string, thunkAPI) => {
     try {
-      const response = await axiosInstance.get('https://railway.bookreview.techtrain.dev/users', {
+      const response = await axiosInstance.get('/users', {
         headers: {
           Authorization: `Bearer ${token}`,
         },

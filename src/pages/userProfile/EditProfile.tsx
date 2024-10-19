@@ -72,7 +72,7 @@ const EditProfile = () => {
   const onSubmit: SubmitHandler<EditProfile> = async (data) => {
     try {
       await axiosInstance.put(
-        'https://railway.bookreview.techtrain.dev/users',
+        '/users',
         { name: data.name },
         {
           headers: {
@@ -85,7 +85,7 @@ const EditProfile = () => {
         const formData = new FormData();
         formData.append('icon', data.icon);
 
-        await axiosInstance.post('https://railway.bookreview.techtrain.dev/uploads', formData, {
+        await axiosInstance.post('/uploads', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
             Authorization: `Bearer ${token}`,

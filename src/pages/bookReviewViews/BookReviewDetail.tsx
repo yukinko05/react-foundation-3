@@ -20,7 +20,7 @@ const BookReviewDetail = () => {
   useEffect(() => {
     const fetchBook = async () => {
       try {
-        const response = await axiosInstance.get(`https://railway.bookreview.techtrain.dev/books/${id}`, {
+        const response = await axiosInstance.get(`/books/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

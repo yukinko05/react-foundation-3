@@ -21,14 +21,11 @@ const BookReviewList = () => {
         return;
       }
       try {
-        const response = await axiosInstance.get(
-          `https://railway.bookreview.techtrain.dev/books?offset=${offset}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axiosInstance.get(`/books?offset=${offset}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setBookReviews(response.data);
       } catch (error) {
         if (error instanceof AxiosError && error.response && error.response.data) {

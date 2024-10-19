@@ -72,7 +72,7 @@ const EditBookReview = () => {
 
   const handleDelete: SubmitHandler<EditReview> = async () => {
     try {
-      await axiosInstance.delete(`https://railway.bookreview.techtrain.dev/books/${id}`, {
+      await axiosInstance.delete(`/books/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -90,7 +90,7 @@ const EditBookReview = () => {
 
   const handleEdit: SubmitHandler<EditReview> = async (data) => {
     try {
-      await axiosInstance.put(`https://railway.bookreview.techtrain.dev/books/${id}`, data, {
+      await axiosInstance.put(`/books/${id}`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

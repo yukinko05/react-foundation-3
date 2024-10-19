@@ -33,7 +33,12 @@ const Home = () => {
         {isAuthenticated && (
           <div className="flex justify-between mt-2 mr-4">
             <UserAvatar />
-            <button title="menu" onClick={handleMenuOpen} type="button" className="z-10 space-y-2 ml-2">
+            <button
+              title="menu"
+              onClick={handleMenuOpen}
+              type="button"
+              className="z-10 space-y-2 ml-2"
+            >
               <div
                 className={
                   openMenu

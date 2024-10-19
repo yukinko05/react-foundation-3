@@ -29,7 +29,7 @@ const SignIn: FC = () => {
 
   const onSubmit: SubmitHandler<LoginForm> = async (data) => {
     try {
-      const response = await axiosInstance.post('https://railway.bookreview.techtrain.dev/signin', data);
+      const response = await axiosInstance.post('/signin', data);
       const token = response.data.token;
       setCookies('token', token);
       dispatch(signIn());
