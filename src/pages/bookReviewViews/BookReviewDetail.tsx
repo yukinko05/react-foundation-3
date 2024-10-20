@@ -1,6 +1,6 @@
 import Header from '../../components/Header';
 import { useState, useEffect } from 'react';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { Book } from '../../types';
 import { useCookies } from 'react-cookie';
 import { useParams } from 'react-router';
@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { FaCartShopping } from 'react-icons/fa6';
 import { FaBook } from 'react-icons/fa';
 import { CgGirl } from 'react-icons/cg';
+import * as bookReviewService from '../../services/bookReviewService';
 
 const BookReviewDetail = () => {
   const [bookDetail, setBookDetail] = useState<Book | undefined>();
@@ -18,13 +19,13 @@ const BookReviewDetail = () => {
 
   useEffect(() => {
     const fetchBook = async () => {
+      if (!id) {
+        return;
+      }
+
       try {
-        const response = await axios.get(`https://railway.bookreview.techtrain.dev/books/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setBookDetail(response.data);
+        const bookReviewDetail = await bookReviewService.fetchBookReviewDetail(id, token);
+        setBookDetail(bookReviewDetail);
       } catch (error) {
         if (error instanceof AxiosError && error.response && error.response.data) {
           setErrorMessage(error.response.data.ErrorMessageJP);

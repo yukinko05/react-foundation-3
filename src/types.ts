@@ -8,6 +8,13 @@ export interface Book {
   isMine: boolean;
 }
 
+export interface CreateReview {
+  title: string;
+  url: string;
+  detail: string;
+  review: string;
+}
+
 export interface User {
   name: string;
   iconUrl: string | undefined;

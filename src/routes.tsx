@@ -7,6 +7,7 @@ import EditProfile from './pages/userProfile/EditProfile';
 import CreateReview from './pages/bookReviewViews/CreateReview';
 import NotFound from './pages/notFound/NotFound';
 import BookReviewDetail from './pages/bookReviewViews/BookReviewDetail';
+import EditBookReview from './pages/bookReviewViews/EditBookReview';
 
 export default function RoutesComponent() {
   return (
@@ -35,6 +36,14 @@ export default function RoutesComponent() {
         element={
           <RequireAuth>
             <BookReviewDetail />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="/edit/:id"
+        element={
+          <RequireAuth>
+            <EditBookReview />
           </RequireAuth>
         }
       />

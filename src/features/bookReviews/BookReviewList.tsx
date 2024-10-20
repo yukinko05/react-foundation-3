@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import { Book } from '../../types';
 import ReviewCard from './ReviewCard';
 import { useCookies } from 'react-cookie';
+import * as bookReviewService from '../../services/bookReviewService';
+
 
 const BookReviewList = () => {
   const offset = useSelector((state: RootState) => state.offset.offset);
@@ -20,15 +22,8 @@ const BookReviewList = () => {
         return;
       }
       try {
-        const response = await axios.get(
-          `https://railway.bookreview.techtrain.dev/books?offset=${offset}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setBookReviews(response.data);
+        const bookReviews = await bookReviewService.fetchBookReviews(offset, token)
+        setBookReviews(bookReviews);
       } catch (error) {
         if (error instanceof AxiosError && error.response && error.response.data) {
           setErrorMessage(error.response.data.ErrorMessageJP);
